@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function DashboardLayout({
   children,
@@ -18,13 +21,15 @@ export default function DashboardLayout({
 
 /* ─── Sidebar ────────────────────────────────────────────────── */
 const navItems = [
-  { label: "Dashboard", icon: "dashboard", href: "/dashboard", active: true },
+  { label: "Dashboard", icon: "dashboard", href: "/dashboard" },
   { label: "Invoices",  icon: "description", href: "/invoices" },
   { label: "Clients",   icon: "group",       href: "/clients" },
   { label: "Billing",   icon: "payments",    href: "/billing" },
 ];
 
 function Sidebar() {
+  const pathname = usePathname();
+
   return (
     <aside className="bg-white text-indigo-900 w-[260px] h-screen border-r border-slate-200 fixed left-0 top-0 flex flex-col py-6 px-4 z-50">
       {/* Workspace switcher */}
@@ -45,8 +50,9 @@ function Sidebar() {
 
       {/* Nav */}
       <nav className="flex flex-col gap-1 flex-1">
-        {navItems.map((item) =>
-          item.active ? (
+        {navItems.map((item) => {
+          const active = pathname.startsWith(item.href);
+          return active ? (
             <Link
               key={item.label}
               href={item.href}
@@ -69,8 +75,8 @@ function Sidebar() {
               <span className="material-symbols-outlined">{item.icon}</span>
               {item.label}
             </Link>
-          )
-        )}
+          );
+        })}
       </nav>
 
       {/* Create invoice CTA */}
