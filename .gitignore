@@ -12,3 +12,7 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
+
+sticht_design/
+BREAKDOWN.md
+CLAUSE.md
